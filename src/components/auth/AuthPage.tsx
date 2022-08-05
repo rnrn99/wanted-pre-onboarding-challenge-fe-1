@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useMutation } from "react-query";
 import {
   Container,
-  AuthContainer,
   Card,
   CardTitle,
   Form,
@@ -106,49 +105,41 @@ function AuthPage() {
 
   return (
     <Container>
-      <AuthContainer>
-        <Card>
-          <CardTitle>{isRegisterPage ? "회원가입" : "로그인"}</CardTitle>
-          <Form onSubmit={formik.handleSubmit}>
-            <InputContainer>
-              <Label>EMAIL</Label>
-              <Input
-                id="email"
-                name="email"
-                type="text"
-                placeholder="이메일을 입력하세요"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-              />
-            </InputContainer>
-            <InputContainer>
-              <Label>PASSWORD</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="비밀번호를 입력하세요"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-              />
-            </InputContainer>
-            <SubmitBtn
-              type="submit"
-              disabled={!(formik.isValid && formik.dirty)}
-            >
-              {isRegisterPage ? "회원가입" : "로그인"}
-            </SubmitBtn>
-          </Form>
-          <LinkBtn
-            type="button"
-            onClick={() => setIsRegisterPage((cur) => !cur)}
-          >
-            회원가입 하러가기
-          </LinkBtn>
-        </Card>
-      </AuthContainer>
+      <Card>
+        <CardTitle>{isRegisterPage ? "회원가입" : "로그인"}</CardTitle>
+        <Form onSubmit={formik.handleSubmit}>
+          <InputContainer>
+            <Label>EMAIL</Label>
+            <Input
+              id="email"
+              name="email"
+              type="text"
+              placeholder="이메일을 입력하세요"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+            />
+          </InputContainer>
+          <InputContainer>
+            <Label>PASSWORD</Label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+            />
+          </InputContainer>
+          <SubmitBtn type="submit" disabled={!(formik.isValid && formik.dirty)}>
+            {isRegisterPage ? "회원가입" : "로그인"}
+          </SubmitBtn>
+        </Form>
+        <LinkBtn type="button" onClick={() => setIsRegisterPage((cur) => !cur)}>
+          회원가입 하러가기
+        </LinkBtn>
+      </Card>
     </Container>
   );
 }

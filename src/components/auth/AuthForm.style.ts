@@ -67,6 +67,14 @@ export const SubmitBtn = styled.button`
   align-self: center;
   justify-self: center;
   border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+    background: var(--button-bg-color, #5c6586);
+  }
 `;
 
 export const LinkBtn = styled.button`

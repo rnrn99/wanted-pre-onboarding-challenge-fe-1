@@ -98,7 +98,11 @@ function AuthPage() {
     },
   });
 
-  useEffect(() => {}, [isRegisterPage]);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <Container>

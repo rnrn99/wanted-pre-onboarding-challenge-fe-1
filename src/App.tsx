@@ -1,4 +1,5 @@
 import "./App.css";
+import "./reset.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LandingPage from "./pages/LandingPage";

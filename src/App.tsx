@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import LandingPage from "./components/LandingPage";
+import LandingPage from "./components/landing/LandingPage";
 import AuthPage from "./components/auth/AuthPage";
 
 function App() {

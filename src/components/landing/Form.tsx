@@ -9,19 +9,14 @@ import {
   TextArea,
   SubmitBtn,
 } from "./Form.style";
+import { ContentType } from "./LandingPage";
 
 interface FormProps {
   onClose: () => void;
 }
 
 interface Response {
-  data: {
-    title: string;
-    content: string;
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  data: ContentType;
 }
 
 interface TodoValues {

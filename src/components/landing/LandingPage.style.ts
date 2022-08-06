@@ -17,6 +17,7 @@ export const ContentContainer = styled.div`
 `;
 
 export const ListContainer = styled.div`
+  max-height: 80vh;
   display: grid;
   grid-template-rows: 3rem 2rem auto;
   row-gap: 1rem;
@@ -44,4 +45,42 @@ export const AddBtn = styled.button`
   color: #fff;
   padding: 0.5rem 1rem;
   margin-right: 1rem;
+`;
+
+export const TodoChipContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+`;
+
+export const TodoChip = styled.div`
+  width: 90%;
+  height: 3rem;
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 16px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin: 0 auto 1rem auto;
+`;
+
+export const TodoTitle = styled.h1`
+  padding: 0 1rem;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+export const ModifyBtn = styled.button`
+  color: #3e67ff;
+  cursor: pointer;
+`;
+
+export const DeleteBtn = styled.button`
+  color: #ff3e3e;
+  cursor: pointer;
 `;

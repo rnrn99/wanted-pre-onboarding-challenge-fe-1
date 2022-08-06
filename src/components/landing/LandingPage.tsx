@@ -12,6 +12,7 @@ import {
   TodoTitle,
   ModifyBtn,
   DeleteBtn,
+  AuthBtn,
   Card,
   CardTitle,
   Line,
@@ -116,6 +117,14 @@ function LandingPage() {
     setSelectedTodo(null);
   };
 
+  const AuthBtnClickHandler = () => {
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+      alert("로그아웃 되었습니다.");
+    }
+    navigate("/auth");
+  };
+
   useEffect(() => {
     setSelectedTodoId(params.id || "");
   }, [params]);
@@ -145,6 +154,9 @@ function LandingPage() {
             </TodoChipContainer>
           </ListContainer>
           <ListContainer>
+            <AuthBtn onClick={AuthBtnClickHandler}>
+              {localStorage.getItem("token") ? "로그아웃" : "로그인"}
+            </AuthBtn>
             {data?.data && (
               <Card>
                 <CardTitle>{data.data?.title}</CardTitle>

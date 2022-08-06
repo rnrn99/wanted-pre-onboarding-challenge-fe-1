@@ -85,6 +85,17 @@ export const DeleteBtn = styled.button`
   cursor: pointer;
 `;
 
+export const AuthBtn = styled.button`
+  align-self: center;
+  justify-self: end;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #2a306a;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+`;
+
 export const Card = styled.div`
   grid-row-start: 3;
   justify-self: center;

@@ -11,6 +11,7 @@ import Form from "./Form";
 
 function LandingPage() {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <Container>
@@ -24,7 +25,7 @@ function LandingPage() {
       </Container>
       {open && (
         <Modal open={open} onClose={() => setOpen(false)}>
-          <Form />
+          <Form onClose={() => setOpen(false)} />
         </Modal>
       )}
     </>

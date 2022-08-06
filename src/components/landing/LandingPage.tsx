@@ -49,6 +49,7 @@ function LandingPage() {
 
   const [open, setOpen] = useState(false);
   const [todos, setTodos] = useState<ContentType[]>([]);
+  const [selectedTodo, setSelectedTodo] = useState<ContentType | null>(null);
 
   useQuery("getTodos", getTodos, {
     enabled: !!localStorage.getItem("token"),
@@ -67,8 +68,18 @@ function LandingPage() {
     },
   });
 
+  const modifyHandler = (item: ContentType) => {
+    setSelectedTodo(item);
+    setOpen(true);
+  };
+
   const deleteHandler = (id: string) => {
     deleteMutation.mutate(id);
+  };
+
+  const modalCloseHandler = () => {
+    setOpen(false);
+    setSelectedTodo(null);
   };
 
   return (
@@ -83,7 +94,9 @@ function LandingPage() {
                 todos.map((item) => (
                   <TodoChip key={item.id}>
                     <TodoTitle>{item.title}</TodoTitle>
-                    <ModifyBtn>수정</ModifyBtn>
+                    <ModifyBtn onClick={() => modifyHandler(item)}>
+                      수정
+                    </ModifyBtn>
                     <DeleteBtn onClick={() => deleteHandler(item.id)}>
                       삭제
                     </DeleteBtn>
@@ -95,8 +108,8 @@ function LandingPage() {
         </ContentContainer>
       </Container>
       {open && (
-        <Modal open={open} onClose={() => setOpen(false)}>
-          <Form onClose={() => setOpen(false)} />
+        <Modal open={open} onClose={modalCloseHandler}>
+          <Form onClose={modalCloseHandler} selectedTodo={selectedTodo} />
         </Modal>
       )}
     </>

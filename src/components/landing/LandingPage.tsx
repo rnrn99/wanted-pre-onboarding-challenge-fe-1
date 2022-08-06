@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, QueryClient } from "react-query";
 import {
   Container,
   ContentContainer,
@@ -35,7 +35,18 @@ const getTodos = async () => {
   return result;
 };
 
+const deleteTodos = async (id: string) => {
+  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `${localStorage.getItem("token")}` },
+  });
+  const result = await res.json();
+  return result;
+};
+
 function LandingPage() {
+  const queryClient = new QueryClient();
+
   const [open, setOpen] = useState(false);
   const [todos, setTodos] = useState<ContentType[]>([]);
 
@@ -45,6 +56,20 @@ function LandingPage() {
       setTodos(result.data);
     },
   });
+
+  const deleteMutation = useMutation(deleteTodos, {
+    onSuccess: (data) => {
+      alert("Todo를 정상적으로 삭제했습니다.");
+      queryClient.invalidateQueries("getTodos");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const deleteHandler = (id: string) => {
+    deleteMutation.mutate(id);
+  };
 
   return (
     <>
@@ -59,7 +84,9 @@ function LandingPage() {
                   <TodoChip key={item.id}>
                     <TodoTitle>{item.title}</TodoTitle>
                     <ModifyBtn>수정</ModifyBtn>
-                    <DeleteBtn>삭제</DeleteBtn>
+                    <DeleteBtn onClick={() => deleteHandler(item.id)}>
+                      삭제
+                    </DeleteBtn>
                   </TodoChip>
                 ))}
             </TodoChipContainer>

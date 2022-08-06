@@ -84,3 +84,33 @@ export const DeleteBtn = styled.button`
   color: #ff3e3e;
   cursor: pointer;
 `;
+
+export const Card = styled.div`
+  grid-row-start: 3;
+  justify-self: center;
+  width: 90%;
+  height: 80%;
+  display: grid;
+  grid-template-rows: 5rem 0.5rem auto;
+  border-radius: 20px;
+  background-color: #fff;
+  align-items: center;
+`;
+
+export const CardTitle = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0 1rem;
+`;
+
+export const Line = styled.hr`
+  border: none;
+  border-top: 1px solid #2a306a;
+  height: 1px;
+  width: 90%;
+`;
+
+export const CardContent = styled.p`
+  padding: 1rem;
+  align-self: start;
+`;

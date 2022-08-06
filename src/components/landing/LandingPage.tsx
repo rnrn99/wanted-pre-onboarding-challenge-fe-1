@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useMutation, QueryClient } from "react-query";
 import {
   Container,
@@ -11,6 +12,10 @@ import {
   TodoTitle,
   ModifyBtn,
   DeleteBtn,
+  Card,
+  CardTitle,
+  Line,
+  CardContent,
 } from "./LandingPage.style";
 import Modal from "../modal/Modal";
 import Form from "./Form";
@@ -23,15 +28,27 @@ export interface ContentType {
   updatedAt: string;
 }
 
-interface Response {
+interface TodosResponse {
   data: ContentType[];
+}
+
+interface TodoResponse {
+  data: ContentType;
 }
 
 const getTodos = async () => {
   const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
     headers: { Authorization: `${localStorage.getItem("token")}` },
   });
-  const result: Response = await res.json();
+  const result: TodosResponse = await res.json();
+  return result;
+};
+
+const getTodoById = async (id: string) => {
+  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`, {
+    headers: { Authorization: `${localStorage.getItem("token")}` },
+  });
+  const result: TodoResponse = await res.json();
   return result;
 };
 
@@ -46,10 +63,13 @@ const deleteTodos = async (id: string) => {
 
 function LandingPage() {
   const queryClient = new QueryClient();
+  const navigate = useNavigate();
+  const params = useParams();
 
   const [open, setOpen] = useState(false);
   const [todos, setTodos] = useState<ContentType[]>([]);
   const [selectedTodo, setSelectedTodo] = useState<ContentType | null>(null);
+  const [selectedTodoId, setSelectedTodoId] = useState(params.id || "");
 
   useQuery("getTodos", getTodos, {
     enabled: !!localStorage.getItem("token"),
@@ -58,9 +78,18 @@ function LandingPage() {
     },
   });
 
+  const { data } = useQuery(
+    ["getTodo", selectedTodoId],
+    () => getTodoById(selectedTodoId),
+    {
+      enabled: !!selectedTodoId,
+    },
+  );
+
   const deleteMutation = useMutation(deleteTodos, {
     onSuccess: (data) => {
       alert("Todo를 정상적으로 삭제했습니다.");
+      navigate("/");
       queryClient.invalidateQueries("getTodos");
     },
     onError: (err) => {
@@ -68,9 +97,14 @@ function LandingPage() {
     },
   });
 
+  const readHandler = (id: string) => {
+    setSelectedTodoId(id);
+    navigate(`/${id}`);
+  };
+
   const modifyHandler = (item: ContentType) => {
-    setSelectedTodo(item);
     setOpen(true);
+    setSelectedTodo(item);
   };
 
   const deleteHandler = (id: string) => {
@@ -82,6 +116,10 @@ function LandingPage() {
     setSelectedTodo(null);
   };
 
+  useEffect(() => {
+    setSelectedTodoId(params.id || "");
+  }, [params]);
+
   return (
     <>
       <Container>
@@ -92,8 +130,10 @@ function LandingPage() {
             <TodoChipContainer>
               {!!todos &&
                 todos.map((item) => (
-                  <TodoChip key={item.id}>
-                    <TodoTitle>{item.title}</TodoTitle>
+                  <TodoChip key={item?.id}>
+                    <TodoTitle onClick={() => readHandler(item.id)}>
+                      {item?.title}
+                    </TodoTitle>
                     <ModifyBtn onClick={() => modifyHandler(item)}>
                       수정
                     </ModifyBtn>
@@ -104,7 +144,15 @@ function LandingPage() {
                 ))}
             </TodoChipContainer>
           </ListContainer>
-          <ListContainer></ListContainer>
+          <ListContainer>
+            {data?.data && (
+              <Card>
+                <CardTitle>{data.data?.title}</CardTitle>
+                <Line />
+                <CardContent>{data.data?.content}</CardContent>
+              </Card>
+            )}
+          </ListContainer>
         </ContentContainer>
       </Container>
       {open && (

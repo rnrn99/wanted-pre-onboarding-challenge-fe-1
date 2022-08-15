@@ -40,3 +40,8 @@
 ![word111](https://user-images.githubusercontent.com/28249915/183248018-e8aaf589-5b30-4dd4-865e-81e16d2742c0.gif)
 
 - 개별 Todo를 조회 순서에 따라 페이지 뒤로가기를 통하여 조회할 수 있습니다.
+
+## 관련 포스팅
+[![Velog's GitHub stats](https://velog-readme-stats.vercel.app/api?name=rnrn99&slug=원티드-프리온보딩-프론트엔드-챌린지-사전과제-회고)](https://velog.io/@rnrn99/%EC%9B%90%ED%8B%B0%EB%93%9C-%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%B1%8C%EB%A6%B0%EC%A7%80-%EC%82%AC%EC%A0%84%EA%B3%BC%EC%A0%9C-%ED%9A%8C%EA%B3%A0)  
+
+[![Velog's GitHub stats](https://velog-readme-stats.vercel.app/api?name=rnrn99&slug=1주차-api-리팩토링)](https://velog.io/@rnrn99/1%EC%A3%BC%EC%B0%A8-api-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81)

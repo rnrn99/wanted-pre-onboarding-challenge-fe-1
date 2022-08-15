@@ -63,7 +63,6 @@ const deleteTodos = async (id: string) => {
 };
 
 function LandingPage() {
-  const queryClient = new QueryClient();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -91,7 +90,6 @@ function LandingPage() {
     onSuccess: (data) => {
       alert("Todo를 정상적으로 삭제했습니다.");
       navigate("/");
-      queryClient.invalidateQueries("getTodos");
     },
     onError: (err) => {
       console.log(err);

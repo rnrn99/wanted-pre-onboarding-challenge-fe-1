@@ -65,7 +65,6 @@ function Form({ onClose, selectedTodo }: FormProps) {
     onSuccess: (data) => {
       onClose();
       alert("todo를 추가했습니다.");
-      queryClient.invalidateQueries("getTodos");
     },
     onError: (err) => {
       console.log(err);
@@ -76,7 +75,6 @@ function Form({ onClose, selectedTodo }: FormProps) {
     onSuccess: (data) => {
       onClose();
       alert("todo를 수정했습니다.");
-      queryClient.invalidateQueries("getTodos");
     },
     onError: (err) => {
       console.log(err);

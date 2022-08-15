@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation, QueryClient } from "react-query";
+import * as Api from "../../api/api";
 import {
   FormContainer,
   Title,
@@ -31,45 +32,25 @@ interface UpdataValues extends TodoValues {
 
 const initialValues: TodoValues = { title: "", content: "" };
 
-const createTodos = async (data: TodoValues) => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(data),
-  });
-  const result: Response = await res.json();
-  return result;
-};
-
 const updateTodos = async (dataToSubmit: UpdataValues) => {
   const { title, content, id } = dataToSubmit;
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({ title, content }),
-  });
-  const result: Response = await res.json();
-  return result;
+  const data = { title, content };
+  return Api.put<Response, TodoValues>(`/todos/${id}`, data);
 };
 
 function Form({ onClose, selectedTodo }: FormProps) {
-  const queryClient = new QueryClient();
-
-  const createMutation = useMutation(createTodos, {
-    onSuccess: (data) => {
-      onClose();
-      alert("todo를 추가했습니다.");
+  const createMutation = useMutation(
+    (data: TodoValues) => Api.post<Response, TodoValues>("/todos", data),
+    {
+      onSuccess: (data) => {
+        onClose();
+        alert("todo를 추가했습니다.");
+      },
+      onError: (err) => {
+        console.log(err);
+      },
     },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  );
 
   const updateMutation = useMutation(updateTodos, {
     onSuccess: (data) => {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery, useMutation, QueryClient } from "react-query";
+import { useQuery, useMutation } from "react-query";
+import * as Api from "../../api/api";
 import {
   Container,
   ContentContainer,
@@ -37,31 +38,6 @@ interface TodoResponse {
   data: ContentType;
 }
 
-const getTodos = async () => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos`, {
-    headers: { Authorization: `${localStorage.getItem("token")}` },
-  });
-  const result: TodosResponse = await res.json();
-  return result;
-};
-
-const getTodoById = async (id: string) => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`, {
-    headers: { Authorization: `${localStorage.getItem("token")}` },
-  });
-  const result: TodoResponse = await res.json();
-  return result;
-};
-
-const deleteTodos = async (id: string) => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/todos/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `${localStorage.getItem("token")}` },
-  });
-  const result = await res.json();
-  return result;
-};
-
 function LandingPage() {
   const navigate = useNavigate();
   const params = useParams();
@@ -71,30 +47,33 @@ function LandingPage() {
   const [selectedTodo, setSelectedTodo] = useState<ContentType | null>(null);
   const [selectedTodoId, setSelectedTodoId] = useState(params.id || "");
 
-  useQuery("getTodos", getTodos, {
+  useQuery("getTodos", () => Api.get<TodosResponse>("/todos"), {
     enabled: !!localStorage.getItem("token"),
-    onSuccess: (result) => {
-      setTodos(result.data);
+    onSuccess: ({ data }) => {
+      setTodos(data);
     },
   });
 
   const { data } = useQuery(
     ["getTodo", selectedTodoId],
-    () => getTodoById(selectedTodoId),
+    () => Api.get<TodoResponse>(`/todos/${selectedTodoId}`),
     {
       enabled: !!selectedTodoId,
     },
   );
 
-  const deleteMutation = useMutation(deleteTodos, {
-    onSuccess: (data) => {
-      alert("Todo를 정상적으로 삭제했습니다.");
-      navigate("/");
+  const deleteMutation = useMutation(
+    (id: string) => Api.delete(`/todos/${id}`),
+    {
+      onSuccess: (data) => {
+        alert("Todo를 정상적으로 삭제했습니다.");
+        navigate("/");
+      },
+      onError: (err) => {
+        console.log(err);
+      },
     },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  );
 
   const readHandler = (id: string) => {
     setSelectedTodoId(id);
@@ -151,6 +130,7 @@ function LandingPage() {
                 ))}
             </TodoChipContainer>
           </ListContainer>
+
           <ListContainer>
             <AuthBtn onClick={AuthBtnClickHandler}>
               {localStorage.getItem("token") ? "로그아웃" : "로그인"}
@@ -165,6 +145,7 @@ function LandingPage() {
           </ListContainer>
         </ContentContainer>
       </Container>
+
       {open && (
         <Modal open={open} onClose={modalCloseHandler}>
           <Form onClose={modalCloseHandler} selectedTodo={selectedTodo} />

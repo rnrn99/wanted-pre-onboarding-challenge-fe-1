@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
+import * as Api from "../../api/api";
 import {
   Container,
   Card,
@@ -27,55 +28,37 @@ interface Response {
 
 const initialValues: AuthValues = { email: "", password: "" };
 
-const registerHandler = async (data: AuthValues) => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/create`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  const result: Response = await res.json();
-  return result;
-};
-
-const loginHandler = async (data: AuthValues) => {
-  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  const result: Response = await res.json();
-  return result;
-};
-
 function AuthPage() {
   const navigate = useNavigate();
 
   const [isRegisterPage, setIsRegisterPage] = useState(false);
 
-  const registerMutation = useMutation(registerHandler, {
-    onSuccess: (data) => {
-      alert(data.message);
-      setIsRegisterPage(false);
+  const registerMutation = useMutation(
+    (data: AuthValues) => Api.post<Response, AuthValues>("/users/create", data),
+    {
+      onSuccess: (data) => {
+        alert(data.message);
+        setIsRegisterPage(false);
+      },
+      onError: (err) => {
+        console.log(err);
+      },
     },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  );
 
-  const loginMutation = useMutation(loginHandler, {
-    onSuccess: (data) => {
-      alert(data.message);
-      localStorage.setItem("token", data.token);
-      navigate("/");
+  const loginMutation = useMutation(
+    (data: AuthValues) => Api.post<Response, AuthValues>("/users/login", data),
+    {
+      onSuccess: (data) => {
+        alert(data.message);
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      },
+      onError: (err) => {
+        console.log(err);
+      },
     },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  );
 
   const formik = useFormik({
     initialValues: initialValues,

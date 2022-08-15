@@ -84,7 +84,7 @@ function AuthPage() {
     if (localStorage.getItem("token")) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <Container>

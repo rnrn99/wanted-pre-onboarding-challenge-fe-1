@@ -1,8 +1,7 @@
 # 원티드 프리온보딩 챌린지 프론트엔드 코스 사전과제
 
 ## 관련 포스팅
-[![Velog's GitHub stats](https://velog-readme-stats.vercel.app/api?name=rnrn99&slug=원티드-프리온보딩-프론트엔드-챌린지-사전과제-회고)](https://velog.io/@rnrn99/%EC%9B%90%ED%8B%B0%EB%93%9C-%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%B1%8C%EB%A6%B0%EC%A7%80-%EC%82%AC%EC%A0%84%EA%B3%BC%EC%A0%9C-%ED%9A%8C%EA%B3%A0)  
-
+[![Velog's GitHub stats](https://velog-readme-stats.vercel.app/api?name=rnrn99&slug=원티드-프리온보딩-프론트엔드-챌린지-사전과제-회고)](https://velog.io/@rnrn99/%EC%9B%90%ED%8B%B0%EB%93%9C-%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EC%B1%8C%EB%A6%B0%EC%A7%80-%EC%82%AC%EC%A0%84%EA%B3%BC%EC%A0%9C-%ED%9A%8C%EA%B3%A0)
 [![Velog's GitHub stats](https://velog-readme-stats.vercel.app/api?name=rnrn99&slug=1주차-api-리팩토링)](https://velog.io/@rnrn99/1%EC%A3%BC%EC%B0%A8-api-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81)
 
 ## 원티드 프리온보딩 챌린지 & 사전과제 안내

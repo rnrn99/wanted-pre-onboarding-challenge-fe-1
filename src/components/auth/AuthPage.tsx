@@ -137,7 +137,7 @@ function AuthPage() {
           </SubmitBtn>
         </Form>
         <LinkBtn type="button" onClick={() => setIsRegisterPage((cur) => !cur)}>
-          회원가입 하러가기
+          {isRegisterPage ? "로그인 하러가기" : "회원가입 하러가기"}
         </LinkBtn>
       </Card>
     </Container>
